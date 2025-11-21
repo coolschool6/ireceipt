@@ -39,9 +39,14 @@ document.getElementById('viewReceiptBtn').onclick = function() {
 
 document.getElementById('sendWhatsappBtn').onclick = function() {
   const id = localStorage.getItem('lastReceiptId');
-  const url = window.location.origin + window.location.pathname.replace('index.html','receipt.html') + `?id=${id}`;
+  const receipts = getReceipts();
+  const receipt = receipts.find(r => r.id === id);
+  if (!receipt) return;
+  const url = window.location.origin + '/receipt.html?id=' + id;
   const msg = `Here is your receipt: ${url}`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+  // Use WhatsApp direct chat with customer number
+  const phone = receipt.customerNumber.replace(/[^\d]/g, ''); // Remove non-digits
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
 };
 
 document.getElementById('viewReceiptsBtn').onclick = function() {
