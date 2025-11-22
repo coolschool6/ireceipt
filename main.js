@@ -81,4 +81,14 @@ document.getElementById('viewReceiptsBtn').onclick = function() {
       }
     };
   }
+  // Back button logic
+  setTimeout(() => {
+    const backBtn = document.getElementById('backBtn');
+    if (backBtn) {
+      backBtn.onclick = function() {
+        document.getElementById('receiptsListSection').style.display = 'none';
+        document.getElementById('createReceiptSection').style.display = 'block';
+      };
+    }
+  }, 0);
 };
