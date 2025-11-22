@@ -6,11 +6,7 @@ function getReceiptById(id) {
 
 function renderReceipt(receipt) {
   if (!receipt) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-    const allReceipts = JSON.parse(localStorage.getItem('receipts') || '[]');
-    document.getElementById('receiptContainer').innerHTML = `<p>Receipt not found.</p>
-      <pre style='background:#f8f8f8;padding:1em;border-radius:6px;'>Debug Info:\nID: ${id}\nReceipts: ${JSON.stringify(allReceipts, null, 2)}</pre>`;
+    document.getElementById('receiptContainer').innerHTML = '<p>Receipt not found.</p>';
     document.getElementById('sendWhatsappBtn').style.display = 'none';
     return;
   }
@@ -34,21 +30,18 @@ function renderReceipt(receipt) {
         <thead>
           <tr style="background:#f2f2f2;">
             <th style="text-align:left;padding:0.5em;border:1px solid #333;">DESCRIPTION</th>
-            <th style="text-align:right;padding:0.5em;border:1px solid #333;">RATE</th>
             <th style="text-align:right;padding:0.5em;border:1px solid #333;">AMOUNT</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td style="padding:0.5em;border:1px solid #333;">${receipt.productDescription}</td>
-            <td style="padding:0.5em;text-align:right;border:1px solid #333;"></td>
             <td style="padding:0.5em;text-align:right;border:1px solid #333;">$${receipt.totalAmount}</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
             <td style="padding:0.5em;font-weight:bold;border:1px solid #333;">Total Paid</td>
-            <td style="padding:0.5em;border:1px solid #333;"></td>
             <td style="padding:0.5em;text-align:right;font-weight:bold;border:1px solid #333;">$${receipt.totalAmount}</td>
           </tr>
         </tfoot>
