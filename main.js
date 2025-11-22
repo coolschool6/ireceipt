@@ -30,7 +30,68 @@ document.getElementById('receiptForm').onsubmit = function(e) {
   localStorage.setItem('lastReceiptId', receipt.id);
   document.getElementById('createReceiptSection').style.display = 'none';
   document.getElementById('afterGeneration').style.display = 'block';
+    // Gather items
+    const itemDescriptions = Array.from(document.getElementsByClassName('itemDescription'));
+    const itemAmounts = Array.from(document.getElementsByClassName('itemAmount'));
+    const items = [];
+    for (let i = 0; i < itemDescriptions.length; i++) {
+      if (itemDescriptions[i].value && itemAmounts[i].value) {
+        items.push({
+          description: itemDescriptions[i].value,
+          amount: parseFloat(itemAmounts[i].value)
+        });
+      }
+    }
+    const totalAmount = items.reduce((sum, item) => sum + item.amount, 0);
+    const receipt = {
+      id: generateUniqueId(),
+      businessName: document.getElementById('businessName').value,
+      businessOwner: document.getElementById('businessOwner').value,
+      customerName: document.getElementById('customerName').value,
+      customerNumber: document.getElementById('customerNumber').value,
+      receiptDate: document.getElementById('receiptDate').value || new Date().toISOString().slice(0,10),
+      receiptFor: document.getElementById('receiptFor').value,
+      items: items,
+      totalAmount: totalAmount
+    };
+    saveReceipt(receipt);
+    localStorage.setItem('lastReceiptId', receipt.id);
+    document.getElementById('createReceiptSection').style.display = 'none';
+    document.getElementById('afterGeneration').style.display = 'block';
+    // Reset form for next receipt
+    document.getElementById('createAnotherBtn').onclick = function() {
+      document.getElementById('receiptForm').reset();
+      // Remove extra item rows except the first
+      const itemsGroup = document.getElementById('itemsGroup');
+      while (itemsGroup.children.length > 1) {
+        itemsGroup.removeChild(itemsGroup.lastChild);
+      }
+      itemsGroup.querySelector('.removeItemBtn').style.display = 'none';
+      document.getElementById('afterGeneration').style.display = 'none';
+      document.getElementById('createReceiptSection').style.display = 'block';
+    };
+  }
+// Add item row logic
+document.getElementById('addItemBtn').onclick = function() {
+  const itemsGroup = document.getElementById('itemsGroup');
+  const newRow = document.createElement('div');
+  newRow.className = 'item-row';
+  newRow.innerHTML = `<input type="text" class="itemDescription" placeholder="Item Description" required> <input type="number" class="itemAmount" placeholder="Amount" required> <button type="button" class="removeItemBtn">Remove</button>`;
+  itemsGroup.appendChild(newRow);
+  updateRemoveButtons();
 };
+
+function updateRemoveButtons() {
+  const removeBtns = document.querySelectorAll('.removeItemBtn');
+  removeBtns.forEach((btn, idx) => {
+    btn.style.display = (removeBtns.length > 1) ? 'inline-block' : 'none';
+    btn.onclick = function() {
+      btn.parentElement.remove();
+      updateRemoveButtons();
+    };
+  });
+}
+updateRemoveButtons();
 
 document.getElementById('viewReceiptBtn').onclick = function() {
   const id = localStorage.getItem('lastReceiptId');

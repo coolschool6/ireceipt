@@ -34,15 +34,17 @@ function renderReceipt(receipt) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style="padding:0.5em;border:1px solid #333;">${receipt.productDescription}</td>
-            <td style="padding:0.5em;text-align:right;border:1px solid #333;">$${receipt.totalAmount}</td>
-          </tr>
+          ${(receipt.items || [{description: receipt.productDescription, amount: receipt.totalAmount}]).map(item => `
+            <tr>
+              <td style='padding:0.5em;border:1px solid #333;'>${item.description}</td>
+              <td style='padding:0.5em;text-align:right;border:1px solid #333;'>$${item.amount.toFixed(2)}</td>
+            </tr>
+          `).join('')}
         </tbody>
         <tfoot>
           <tr>
             <td style="padding:0.5em;font-weight:bold;border:1px solid #333;">Total Paid</td>
-            <td style="padding:0.5em;text-align:right;font-weight:bold;border:1px solid #333;">$${receipt.totalAmount}</td>
+            <td style="padding:0.5em;text-align:right;font-weight:bold;border:1px solid #333;">$${receipt.totalAmount.toFixed(2)}</td>
           </tr>
         </tfoot>
       </table>
