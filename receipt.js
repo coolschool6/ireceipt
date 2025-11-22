@@ -6,7 +6,11 @@ function getReceiptById(id) {
 
 function renderReceipt(receipt) {
   if (!receipt) {
-    document.getElementById('receiptContainer').innerHTML = '<p>Receipt not found.</p>';
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    const allReceipts = JSON.parse(localStorage.getItem('receipts') || '[]');
+    document.getElementById('receiptContainer').innerHTML = `<p>Receipt not found.</p>
+      <pre style='background:#f8f8f8;padding:1em;border-radius:6px;'>Debug Info:\nID: ${id}\nReceipts: ${JSON.stringify(allReceipts, null, 2)}</pre>`;
     document.getElementById('sendWhatsappBtn').style.display = 'none';
     return;
   }
@@ -70,7 +74,6 @@ function formatDate(dateStr) {
   const month = d.toLocaleString('default', { month: 'long' });
   const year = d.getFullYear();
   return `${day} ${month},${year}`;
-}
 }
 
 const urlParams = new URLSearchParams(window.location.search);
