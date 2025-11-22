@@ -19,7 +19,7 @@ function renderReceipt(receipt) {
         </div>
         <div style="text-align:right;min-width:120px;max-width:38%;word-break:break-word;">
           <span style="font-size:1.2em;font-weight:bold;color:#888;">Receipt</span><br>
-          <span style="font-size:1em;white-space:nowrap;">Date: ${formatDate(receipt.receiptDate)}</span>
+          <span style="font-size:1em;white-space:nowrap;display:inline-block;margin-left:-20px;">Date: ${formatDate(receipt.receiptDate)}</span>
         </div>
       </div>
       <div style="margin:2em 0 1em 0;display:flex;justify-content:space-between;">

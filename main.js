@@ -102,11 +102,15 @@ document.getElementById('viewReceiptsBtn').onclick = function() {
   const receipts = getReceipts();
   const list = document.getElementById('receiptsList');
   list.innerHTML = '';
-  receipts.forEach(r => {
-    const li = document.createElement('li');
-    li.innerHTML = `<a href="receipt.html?id=${r.id}">${r.businessName} - ${r.customerName} (${r.receiptDate})</a> <button class='deleteBtn' data-id='${r.id}' style='background:#c0392b;color:#fff;border:none;border-radius:4px;padding:0.3em 0.7em;margin-left:1em;'>Delete</button>`;
-    list.appendChild(li);
-  });
+  if (receipts.length === 0) {
+    list.innerHTML = '<li style="color:#888;text-align:center;">No receipts found.</li>';
+  } else {
+    receipts.forEach(r => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="receipt.html?id=${r.id}">${r.businessName} - ${r.customerName} (${r.receiptDate})</a> <button class='deleteBtn' data-id='${r.id}' style='background:#c0392b;color:#fff;border:none;border-radius:4px;padding:0.3em 0.7em;margin-left:1em;'>Delete</button>`;
+      list.appendChild(li);
+    });
+  }
   // Add delete logic
   Array.from(document.getElementsByClassName('deleteBtn')).forEach(btn => {
     btn.onclick = function() {
