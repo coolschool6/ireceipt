@@ -12,14 +12,14 @@ function renderReceipt(receipt) {
   }
   document.getElementById('receiptContainer').innerHTML = `
     <div class="receipt-box" style="background:#fff;padding:2em 1em 1em 1em;max-width:700px;margin:auto;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-        <div>
-          <span style="font-size:1.5em;font-weight:bold;">${receipt.businessName}</span><br>
-          <span style="font-style:italic;color:#0074D9;">${receipt.businessOwner}</span>
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:0.5em;">
+        <div style="min-width:0;max-width:60%;word-break:break-word;">
+          <span style="font-size:1.3em;font-weight:bold;word-break:break-word;">${receipt.businessName}</span><br>
+          <span style="font-style:italic;color:#0074D9;word-break:break-word;">${receipt.businessOwner}</span>
         </div>
-        <div style="text-align:right;">
-          <span style="font-size:1.5em;font-weight:bold;color:#888;">Receipt</span><br>
-          <span style="font-size:1em;">Date: ${formatDate(receipt.receiptDate)}</span>
+        <div style="text-align:right;min-width:120px;max-width:38%;word-break:break-word;">
+          <span style="font-size:1.2em;font-weight:bold;color:#888;">Receipt</span><br>
+          <span style="font-size:1em;white-space:nowrap;">Date: ${formatDate(receipt.receiptDate)}</span>
         </div>
       </div>
       <div style="margin:2em 0 1em 0;display:flex;justify-content:space-between;">
